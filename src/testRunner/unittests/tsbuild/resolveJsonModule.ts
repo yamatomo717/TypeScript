@@ -49,7 +49,7 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         });
     }
 
-    function verfiyJson(
+    function verifyJson(
         input: Pick<VerifyTscWithEditsInput, "subScenario" | "modifyFs" | "edits"> | string,
         tsconfigFiles: object,
         additionalCompilerOptions?: CompilerOptions,
@@ -70,19 +70,19 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         });
     }
 
-    verfiyJson("include only", {
+    verifyJson("include only", {
         include: [
             "src/**/*",
         ],
     });
 
-    verfiyJson("include only without outDir", {
+    verifyJson("include only without outDir", {
         include: [
             "src/**/*",
         ],
     }, { outDir: undefined });
 
-    verfiyJson({
+    verifyJson({
         subScenario: "include only with json not in rootDir",
         modifyFs: fs => {
             fs.renameSync("/src/src/hello.json", "/src/hello.json");
@@ -94,7 +94,7 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         ],
     }, { rootDir: "src" });
 
-    verfiyJson({
+    verifyJson({
         subScenario: "include only with json without rootDir but outside configDirectory",
         modifyFs: fs => {
             fs.renameSync("/src/src/hello.json", "/hello.json");
@@ -106,14 +106,14 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         ],
     });
 
-    verfiyJson("include of json along with other include", {
+    verifyJson("include of json along with other include", {
         include: [
             "src/**/*",
             "src/**/*.json",
         ],
     });
 
-    verfiyJson({
+    verifyJson({
         subScenario: "include of json along with other include and file name matches ts file",
         modifyFs: fs => {
             fs.renameSync("/src/src/hello.json", "/src/src/index.json");
@@ -126,14 +126,14 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         ],
     });
 
-    verfiyJson("files containing json file", {
+    verifyJson("files containing json file", {
         files: [
             "src/index.ts",
             "src/hello.json",
         ],
     });
 
-    verfiyJson("include and files", {
+    verifyJson("include and files", {
         files: [
             "src/hello.json",
         ],
@@ -142,7 +142,7 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         ],
     });
 
-    verfiyJson({
+    verifyJson({
         subScenario: "sourcemap",
         edits: noChangeOnlyRuns,
     }, {
@@ -152,7 +152,7 @@ describe("unittests:: tsbuild:: with resolveJsonModule option on project resolve
         ],
     }, { sourceMap: true });
 
-    verfiyJson({
+    verifyJson({
         subScenario: "without outDir",
         edits: noChangeOnlyRuns,
     }, {
